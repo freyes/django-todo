@@ -10,7 +10,7 @@ class TaskTest(TestCase):
         task = Task()
         self.assertEqual(task.completed, False)
 
-    def test_description_should_allow_blank(self):
+    def test_description_should_not_allow_blank(self):
         """
         Description field should allow blank value.
         """
