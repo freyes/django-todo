@@ -1,5 +1,6 @@
 from django.test import TestCase
 from models import Task
+from forms import TaskForm
 from django.core.exceptions import ValidationError
 
 class TaskTest(TestCase):
@@ -28,6 +29,14 @@ class TaskTest(TestCase):
         task = Task(description="Bob")
         task.save()
         fetched_task = Task.objects.filter(description="Bob")[0]
-
         self.assertEqual(fetched_task.id, task.id)
 
+class TaskFormTest(TestCase):
+    def test_should_be_invalid_from_blank_description(self):
+        """
+        A Task Form should be invalid, due to blank desc.
+        """
+        task = Task()
+        task_form = TaskForm(instance=task)
+        self.assertFalse(task_form.is_valid())
+        
