@@ -6,18 +6,18 @@ from models import Task
 from forms import TaskForm
 
 def index(request):
-	if request.method == 'POST':
-		form = TaskForm(request.POST)
-		if form.is_valid():
-			form.save()
-			return HttpResponseRedirect(reverse('index'))
-	else:
-		form = TaskForm()
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('index'))
+    else:
+        form = TaskForm()
 
-	tasks = Task.objects.all()
+    tasks = Task.objects.all()
 
-	return render(request, 'tasks/index.html', {
-		'name': 'World', 
-		'form': form,
-		'tasks': tasks
-	})
+    return render(request, 'tasks/index.html', {
+        'name': 'World', 
+        'form': form,
+        'tasks': tasks
+    })

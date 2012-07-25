@@ -9,4 +9,4 @@ if os.environ.has_key("ENV_NAME"):
     except ImportError, exp:
         pass
 else:
-	ENV_NAME = 'development'
+    ENV_NAME = 'development'

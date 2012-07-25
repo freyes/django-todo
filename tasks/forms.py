@@ -3,5 +3,5 @@ from django.forms import ModelForm
 
 
 class TaskForm(ModelForm):
-	class Meta:
-		model = Task
+    class Meta:
+        model = Task

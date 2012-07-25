@@ -1,14 +1,14 @@
 <h1>Hello {{ name }}!</h1>
 <form action="." method="post">
-	{% csrf_token %}
-	{{ form.description.label_tag }}
-	{{ form.description }}
-	<input type="submit" value="Submit" />
+    {% csrf_token %}
+    {{ form.description.label_tag }}
+    {{ form.description }}
+    <input type="submit" value="Submit" />
 </form>
 
 
 <ul>
 {% for task in tasks %}
-	<li>{{ task.description }}</li>
+    <li>{{ task.description }}</li>
 {% endfor %}
 </ul>
