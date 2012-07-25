@@ -39,4 +39,3 @@ class TaskFormTest(TestCase):
         task = Task()
         task_form = TaskForm(instance=task)
         self.assertFalse(task_form.is_valid())
-        
