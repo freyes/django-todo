@@ -28,3 +28,10 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+You should be able to access the project in the browser at http://localhost:8000.
+
+In order to interact with tasks, you'll want to setup the database.
+
+```bash
+python manage.py syncdb
+```
