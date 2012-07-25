@@ -1,6 +1,6 @@
 from django.test import TestCase
 from models import Task
-
+from django.core.exceptions import ValidationError
 
 class TaskTest(TestCase):
     def test_completed_should_be_false(self):
@@ -12,10 +12,14 @@ class TaskTest(TestCase):
 
     def test_description_should_not_allow_blank(self):
         """
-        Description field should allow blank value.
+        Description field should raise exception when value is blank.
         """
         task = Task()
-        self.assertEqual(task.description, '')
+
+        # @todo how to validate one field?
+        with self.assertRaises(ValidationError):
+            task.full_clean()
+
 
     def test_task_should_be_fetchable(self):
         """
@@ -26,3 +30,4 @@ class TaskTest(TestCase):
         fetched_task = Task.objects.filter(description="Bob")[0]
 
         self.assertEqual(fetched_task.id, task.id)
+
