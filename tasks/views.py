@@ -2,8 +2,8 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from models import Task
 from forms import TaskForm
-
 
 def index(request):
 	if request.method == 'POST':
@@ -14,4 +14,10 @@ def index(request):
 	else:
 		form = TaskForm()
 
-	return render(request, 'tasks/index.html', {"name": "World", "form": form})
+	tasks = Task.objects.all()
+
+	return render(request, 'tasks/index.html', {
+		'name': 'World', 
+		'form': form,
+		'tasks': tasks
+	})

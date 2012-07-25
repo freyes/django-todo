@@ -5,3 +5,10 @@
 	{{ form.description }}
 	<input type="submit" value="Submit" />
 </form>
+
+
+<ul>
+{% for task in tasks %}
+	<li>{{ task.description }}</li>
+{% endfor %}
+</ul>
