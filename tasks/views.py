@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from models import Task
 from forms import TaskForm
 
-def index(request):
+def get(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
@@ -15,9 +15,11 @@ def index(request):
         form = TaskForm()
 
     tasks = Task.objects.all()
+    uncompleteCount = Task.objects.filter(completed=False).count()
 
     return render(request, 'tasks/index.html', {
         'name': 'World', 
         'form': form,
-        'tasks': tasks
+        'tasks': tasks,
+        'uncompleteCount': uncompleteCount,
     })

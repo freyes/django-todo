@@ -1,14 +1,69 @@
-<h1>Hello {{ name }}!</h1>
-<form action="." method="post">
-    {% csrf_token %}
-    {{ form.description.label_tag }}
-    {{ form.description }}
-    <input type="submit" value="Submit" />
-</form>
+{% extends "layout.html" %}
+{% load widget_tweaks %}
+{% block body %}
+    <!-- container -->
+    <div class="container">
 
+        <div class="row">
+            <div class="eight columns centered">
+                <h2>Framework Todo</h2>
+            </div>
+        </div>
 
-<ul>
-{% for task in tasks %}
-    <li>{{ task.description }}</li>
-{% endfor %}
-</ul>
+        <div class="row">
+            <div class="eight columns centered">
+
+                {# NEW TASK #}
+                <form action="." method="post">
+                    {% csrf_token %}
+                    {{ form.description|attr:'placeholder="Type task &amp; hit enter."' }}
+                </form>
+
+                {# TASKS #}
+                {% for form in tasks %}
+                    <div class="task{% if form.completed %} is-completed{% endif %}">
+                        {# MARK COMPLETED #}
+ <!--                        <div class="task-status">
+                            <form class="form-completed" action="" method="POST">
+                                {% csrf_token %}
+                                {% if form.completed %}
+                                    <button class="checked" type="submit" name="task_completed" value="false" tabindex="-1">&radic;</button>
+                                {% else %}
+                                    <button type="submit" name="task_completed" value="true" tabindex="-1">&radic;</button>
+                                {% endif %}
+                            </form>
+                        </div>
+ -->
+                        {# UPDATE DESCRIPTION #}
+                        <div class="task-description">
+                            <form class="form-description" action="" method="POST">
+                                {% csrf_token %}
+                                {{ form.description }}
+                            </form>
+                        </div>
+
+                        {# DELETE #}
+<!--                         <div class="task-remove">
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" tabindex="-1">&times;</button>
+                            </form>
+                        </div>
+ -->
+                    </div>
+
+                {% endfor %}
+
+<!-- 
+                {% if uncompleteCount > 0 %}
+                    <p>
+                        <strong>{{ uncompleteCount }}</strong> Left.
+                    </p>
+                {% endif %}
+ -->
+            </div>
+        </div>
+
+    </div>
+    <!-- container -->
+{% endblock %}

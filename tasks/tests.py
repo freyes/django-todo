@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from models import Task
 from forms import TaskForm
 from django.core.exceptions import ValidationError
@@ -26,10 +26,21 @@ class TaskTest(TestCase):
         """
         A Task should be fetchable via the ORM
         """
-        task = Task(description="Bob")
+        task = Task(description="Test")
         task.save()
-        fetched_task = Task.objects.filter(description="Bob")[0]
+        fetched_task = Task.objects.filter(description="Test")[0]
         self.assertEqual(fetched_task.id, task.id)
+
+    def test_task_should_be_complete(self):
+        """
+        A Task should be able to completed
+        """
+        task = Task(description="Test")
+        self.assertFalse(task.completed)
+        task.completed = True
+        task.save()
+        fetched_task = Task.objects.filter(description="Test")[0]
+        self.assertTrue(fetched_task.completed)
 
 class TaskFormTest(TestCase):
     def test_should_be_invalid_from_blank_description(self):
