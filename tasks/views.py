@@ -2,24 +2,41 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.views.decorators.http import require_http_methods
 from models import Task
 from forms import TaskForm
+from app.views import RestView
 
-def get(request):
-    if request.method == 'POST':
+
+class TaskIndexView(RestView):
+
+    def GET(self, request):
+        form = TaskForm()
+        tasks = Task.objects.all()
+        uncompleteCount = Task.objects.filter(completed=False).count()
+
+        return render(request, 'tasks/index.html', {
+            'name': 'World', 
+            'form': form,
+            'tasks': tasks,
+            'uncompleteCount': uncompleteCount,
+        })
+
+    def POST(self, request):
         form = TaskForm(request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('index'))
-    else:
-        form = TaskForm()
+        # else invalid... @todo implement
 
-    tasks = Task.objects.all()
-    uncompleteCount = Task.objects.filter(completed=False).count()
+# class TaskView(RestView):
 
-    return render(request, 'tasks/index.html', {
-        'name': 'World', 
-        'form': form,
-        'tasks': tasks,
-        'uncompleteCount': uncompleteCount,
-    })
+#     def GET(self, request, task_id):
+#         pass
+
+#     def PUT(self, request, task_id):
+#         pass
+
+#     def DELETE(self, request, task_id):
+#         pass
+

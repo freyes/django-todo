@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
+from views import TaskIndexView
 
 urlpatterns = patterns('',
 
-    url(r'^$', 'tasks.views.get', name="tasks_views_get"),
+    url(r'^$', TaskIndexView(), name="task_index"),
 )

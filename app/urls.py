@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from tasks.views import TaskIndexView
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -6,7 +7,7 @@ from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', 'tasks.views.get', name='index'),
+    url(r'^$', TaskIndexView(), name='index'),
     # url(r'^$', 'app.views.home', name='home'),
     # url(r'^app/', include('app.foo.urls')),
 
