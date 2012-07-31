@@ -3,6 +3,7 @@ from models import Task
 from forms import TaskForm
 from django.core.exceptions import ValidationError
 
+
 class TaskTest(TestCase):
     def test_completed_should_be_false(self):
         """
@@ -50,3 +51,15 @@ class TaskFormTest(TestCase):
         task = Task()
         task_form = TaskForm(instance=task)
         self.assertFalse(task_form.is_valid())
+
+class getTest(TestCase):
+    def test_should_create_task(self):
+        """
+        A POST to the tasks view should result in a new task being created.
+        """
+        response = Client().post('/tasks/', {
+            'description': 'drink milk'
+        })
+        #self.assertEqual(response.status_code, 201)
+        self.assertEquals(Task.objects.all()[0].description, 'drink milk')
+
