@@ -9,8 +9,11 @@ from app.views import RestView
 
 class TaskIndexView(RestView):
 
-    def GET(self, request):
-        form = TaskForm()
+    def GET(self, request, form=None):
+        
+        if form is None:
+            form = TaskForm()
+
         tasks = Task.objects.all()
         uncompleteCount = Task.objects.filter(completed=False).count()
 
@@ -25,7 +28,8 @@ class TaskIndexView(RestView):
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('index'))
-        # else invalid... @todo implement
+        
+        return self.GET(request, form)
 
 # class TaskView(RestView):
 

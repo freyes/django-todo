@@ -16,11 +16,18 @@
                 {# NEW TASK #}
                 <form action="." method="post">
                     {% csrf_token %}
-                    {{ form.description|attr:'placeholder="Type task &amp; hit enter."' }}
+                    {% if not form.description.errors %}
+                        {{ form.description|attr:'placeholder="Type task &amp; hit enter."' }}
+                    {% else %}
+                        {{ form.description|attr:'placeholder="Type task &amp; hit enter." class="error"' }}
+                        {% for error in form.description.errors %}
+                            <small class="error">{{ error }}</small>
+                        {% endfor %}
+                    {% endif %}
                 </form>
 
                 {# TASKS #}
-                {% for form in tasks %}
+                {% for task in tasks %}
                     <div class="task{% if form.completed %} is-completed{% endif %}">
                         {# MARK COMPLETED #}
  <!--                        <div class="task-status">
@@ -38,7 +45,7 @@
                         <div class="task-description">
                             <form class="form-description" action="" method="POST">
                                 {% csrf_token %}
-                                {{ form.description }}
+                                {{ task.description }}
                             </form>
                         </div>
 
