@@ -28,10 +28,27 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-You should be able to access the project in the browser at http://localhost:8000.
+### Using the App
+
 
 In order to interact with tasks, you'll want to setup the database.
 
 ```bash
 python manage.py syncdb
 ```
+
+Then go ahead and start the local server
+
+```bash
+python manage.py runserver
+```
+
+And now tou should be able to access the project in the browser at http://localhost:8000.
+
+To clear the database run the following command
+
+```bash
+python manage.py flush
+```
+
+
