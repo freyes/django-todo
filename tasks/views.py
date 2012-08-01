@@ -12,12 +12,16 @@ class TaskIndexView(View):
             form = TaskForm()
 
         tasks = Task.objects.all()
-        uncompleteCount = Task.objects.filter(completed=False).count()
+        forms = []
+        for task in tasks:
+            forms.append(TaskForm(instance=task))
+
+        #uncompleteCount = Task.objects.filter(completed=False).count()
 
         return render(request, 'tasks/index.html', {
             'form': form,
-            'tasks': tasks,
-            'uncompleteCount': uncompleteCount,
+            'forms': forms,
+            #'uncompleteCount': uncompleteCount,
         })
 
     def post(self, request):
@@ -30,6 +34,12 @@ class TaskIndexView(View):
 
 
 class TaskView(View):
+
+    def put(self, request, task_id):
+        task = Task.objects.filter(id=task_id)[0]
+        form = TaskForm(data=request.POST, instance=task)
+        form.save()
+        return redirect('index')
 
     def delete(self, request, task_id):
         Task.objects.filter(id=task_id).delete()

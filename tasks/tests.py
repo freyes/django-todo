@@ -46,11 +46,24 @@ class TaskTest(TestCase):
         """
         A Task should be deletable via the ORM
         """
-        task = Task(description="workout")
+        task = Task(description="Workout")
         task.save()
         self.assertTrue(Task.objects.all().exists())
         task.delete()
         self.assertFalse(Task.objects.all().exists())
+
+    def test_task_should_be_updatable(self):
+        """
+        A Task should be updatable via the ORM
+        """
+        task = Task(description="Workout")
+        task.save()
+        self.assertTrue(Task.objects.all().exists())
+        task.description = "Test"
+        task.save()
+        self.assertTrue(Task.objects.filter(description="Test").exists())
+
+
 
 class TaskFormTest(TestCase):
     def test_should_be_invalid_from_blank_description(self):
@@ -80,3 +93,15 @@ class TaskIndexView(TestCase):
         task.save()
         response = Client().delete('/tasks/' + str(task.id))
         self.assertFalse(Task.objects.all().exists())
+    
+    # @todo babysit django-respite issue #38 to fix this
+    # def test_put_should_update_task(self):
+    #     """
+    #     A PUT request should result in the task being updated.
+    #     """
+    #     task = Task(description="run")
+    #     task.save()
+    #     response = Client().put('/tasks/' + str(task.id), {
+    #         'description': "Test"
+    #     })
+    #     self.assertTrue(Task.objects.filter(description="Test").exists())

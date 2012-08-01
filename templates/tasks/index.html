@@ -27,8 +27,9 @@
                 </form>
 
                 {# TASKS #}
-                {% for task in tasks %}
-                    <div class="task{% if form.completed %} is-completed{% endif %}">
+                {% for form in forms %}
+                    <div class="task{% if form.instance.completed %} is-completed{% endif %}">
+                        
                         {# MARK COMPLETED #}
                         {% comment %}
                          <div class="task-status">
@@ -45,15 +46,16 @@
 
                         {# UPDATE DESCRIPTION #}
                         <div class="task-description">
-                            <form class="form-description" action="{% url task task.id %}" method="POST">
+                            <form class="form-description" action="{% url task form.instance.id %}" method="POST">
                                 {% csrf_token %}
-                                {{ task.description }}
+                                <input type="hidden" name="_method" value="PUT" />
+                                {{ form.description }}
                             </form>
                         </div>
 
                         {# DELETE #}
                          <div class="task-remove">
-                            <form action="{% url task task.id %}" method="POST">
+                            <form action="{% url task form.instance.id %}" method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" name="_method" value="DELETE" />
                                 <button type="submit" tabindex="-1">&times;</button>
