@@ -37,7 +37,7 @@ class TaskView(View):
 
     def put(self, request, task_id):
         task = Task.objects.filter(id=task_id)[0]
-        form = TaskForm(data=request.POST, instance=task)
+        form = TaskForm(data=request.PUT, instance=task)
         form.save()
         return redirect('index')
 
