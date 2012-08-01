@@ -6,7 +6,6 @@ from forms import TaskForm
 
 
 class TaskIndexView(View):
-    template_name = "tasks/index.html"
 
     def get(self, request, form=None):
         if form is None:
@@ -22,10 +21,16 @@ class TaskIndexView(View):
         })
 
     def post(self, request):
-
         form = TaskForm(data=request.POST)
         if not form.is_valid():
             return self.get(request, form)
 
         form.save()
+        return redirect('index')
+
+
+class TaskView(View):
+
+    def delete(self, request, task_id):
+        Task.objects.filter(id=task_id).delete()
         return redirect('index')

@@ -72,3 +72,11 @@ class TaskIndexView(TestCase):
         #self.assertEqual(response.status_code, 201)
         self.assertEquals(Task.objects.all()[0].description, 'drink milk')
 
+    def test_delete_should_delete_task(self):
+        """
+        A DELETE request should result in the task being deleted.
+        """
+        task = Task(description="run")
+        task.save()
+        response = Client().delete('/tasks/' + str(task.id))
+        self.assertFalse(Task.objects.all().exists())
