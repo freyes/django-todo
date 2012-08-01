@@ -7,7 +7,7 @@ from tasks.views import TaskIndexView
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', TaskIndexView(), name='index'),
+    url(r'^$', TaskIndexView.as_view(), name='index'),
     # url(r'^$', 'app.views.home', name='home'),
     # url(r'^app/', include('app.foo.urls')),
 

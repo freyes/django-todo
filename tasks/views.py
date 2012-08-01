@@ -1,44 +1,31 @@
 # Create your views here.
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
+from django.views.generic.base import TemplateView
 from models import Task
 from forms import TaskForm
-from app.views import RestView
 
 
-class TaskIndexView(RestView):
+class TaskIndexView(TemplateView):
+    template_name = "tasks/index.html"
 
-    def GET(self, request, form=None):
-        
+    def get(self, request, form=None):
         if form is None:
             form = TaskForm()
 
         tasks = Task.objects.all()
         uncompleteCount = Task.objects.filter(completed=False).count()
 
-        return render(request, 'tasks/index.html', {
+        return self.render_to_response({
             'form': form,
             'tasks': tasks,
             'uncompleteCount': uncompleteCount,
         })
 
-    def POST(self, request):
-        form = TaskForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('index'))
-        
-        return self.GET(request, form)
+    def post(self, request):
 
-# class TaskView(RestView):
+        form = TaskForm(data=request.POST)
+        if not form.is_valid():
+            return self.get(request, form)
 
-#     def GET(self, request, task_id):
-#         pass
-
-#     def PUT(self, request, task_id):
-#         pass
-
-#     def DELETE(self, request, task_id):
-#         pass
-
+        form.save()
+        return redirect('index')

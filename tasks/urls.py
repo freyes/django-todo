@@ -3,5 +3,5 @@ from views import TaskIndexView
 
 urlpatterns = patterns('',
 
-    url(r'^$', TaskIndexView(), name="task_index"),
+    url(r'^$', TaskIndexView.as_view(), name="task_index"),
 )
