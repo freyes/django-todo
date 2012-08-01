@@ -14,7 +14,7 @@
             <div class="eight columns centered">
 
                 {# NEW TASK #}
-                <form action="." method="post">
+                <form action="{% url task_index %}" method="post">
                     {% csrf_token %}
                     {% if not form.description.errors %}
                         {{ form.description|attr:'placeholder="Type task &amp; hit enter."' }}
@@ -30,7 +30,8 @@
                 {% for task in tasks %}
                     <div class="task{% if form.completed %} is-completed{% endif %}">
                         {# MARK COMPLETED #}
- <!--                        <div class="task-status">
+                        {% comment %}
+                         <div class="task-status">
                             <form class="form-completed" action="" method="POST">
                                 {% csrf_token %}
                                 {% if form.completed %}
@@ -40,34 +41,35 @@
                                 {% endif %}
                             </form>
                         </div>
- -->
+                        {% endcomment %}
+
                         {# UPDATE DESCRIPTION #}
                         <div class="task-description">
-                            <form class="form-description" action="" method="POST">
+                            <form class="form-description" action="{% url task task.id %}" method="POST">
                                 {% csrf_token %}
                                 {{ task.description }}
                             </form>
                         </div>
 
                         {# DELETE #}
-<!--                         <div class="task-remove">
-                            <form action="" method="POST">
+                         <div class="task-remove">
+                            <form action="{% url task task.id %}" method="POST">
                                 {% csrf_token %}
+                                <input type="hidden" name="_method" value="DELETE" />
                                 <button type="submit" tabindex="-1">&times;</button>
                             </form>
                         </div>
- -->
                     </div>
 
                 {% endfor %}
 
-<!-- 
+                {% comment %}
                 {% if uncompleteCount > 0 %}
                     <p>
                         <strong>{{ uncompleteCount }}</strong> Left.
                     </p>
                 {% endif %}
- -->
+                {% endcomment %}
             </div>
         </div>
 
