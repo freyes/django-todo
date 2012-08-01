@@ -61,8 +61,8 @@ class TaskFormTest(TestCase):
         task_form = TaskForm(instance=task)
         self.assertFalse(task_form.is_valid())
 
-class getTest(TestCase):
-    def test_should_create_task(self):
+class TaskIndexView(TestCase):
+    def test_post_should_create_task(self):
         """
         A POST to the tasks view should result in a new task being created.
         """
