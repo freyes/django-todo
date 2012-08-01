@@ -31,18 +31,20 @@
                     <div class="task{% if form.instance.completed %} is-completed{% endif %}">
                         
                         {# MARK COMPLETED #}
-                        {% comment %}
                          <div class="task-status">
-                            <form class="form-completed" action="" method="POST">
+                            <form class="form-completed" action="{% url task form.instance.id %}" method="POST">
                                 {% csrf_token %}
-                                {% if form.completed %}
-                                    <button class="checked" type="submit" name="task_completed" value="false" tabindex="-1">&radic;</button>
+                                <input type="hidden" name="_method" value="PUT" />
+                                {# @todo Figure out how to remove this #}
+                                <input type="hidden" name="description" value="{{ form.instance.description }}">
+                                {% if form.instance.completed %}
+                                    <button class="checked" type="submit" name="completed" value="false" tabindex="-1">&radic;</button>
                                 {% else %}
-                                    <button type="submit" name="task_completed" value="true" tabindex="-1">&radic;</button>
+                                    <button type="submit" name="completed" value="true" tabindex="-1">&radic;</button>
                                 {% endif %}
                             </form>
                         </div>
-                        {% endcomment %}
+                        
 
                         {# UPDATE DESCRIPTION #}
                         <div class="task-description">
