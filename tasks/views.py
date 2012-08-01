@@ -16,12 +16,12 @@ class TaskIndexView(View):
         for task in tasks:
             forms.append(TaskForm(instance=task))
 
-        #uncompleteCount = Task.objects.filter(completed=False).count()
+        uncompleteCount = Task.objects.filter(completed=False).count()
 
         return render(request, 'tasks/index.html', {
             'form': form,
             'forms': forms,
-            #'uncompleteCount': uncompleteCount,
+            'uncompleteCount': uncompleteCount,
         })
 
     def post(self, request):
