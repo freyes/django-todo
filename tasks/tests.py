@@ -22,7 +22,6 @@ class TaskTest(TestCase):
         with self.assertRaises(ValidationError):
             task.full_clean()
 
-
     def test_task_should_be_fetchable(self):
         """
         A Task should be fetchable via the ORM
@@ -34,7 +33,7 @@ class TaskTest(TestCase):
 
     def test_task_should_be_complete(self):
         """
-        A Task should be able to completed
+        A Task should be able to completed via the ORM
         """
         task = Task(description="Test")
         self.assertFalse(task.completed)
@@ -42,6 +41,16 @@ class TaskTest(TestCase):
         task.save()
         fetched_task = Task.objects.filter(description="Test")[0]
         self.assertTrue(fetched_task.completed)
+
+    def test_task_should_be_deletable(self):
+        """
+        A Task should be deletable via the ORM
+        """
+        task = Task(description="workout")
+        task.save()
+        self.assertTrue(Task.objects.all().exists())
+        task.delete()
+        self.assertFalse(Task.objects.all().exists())
 
 class TaskFormTest(TestCase):
     def test_should_be_invalid_from_blank_description(self):
