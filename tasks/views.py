@@ -1,11 +1,11 @@
 # Create your views here.
-from django.shortcuts import redirect
-from django.views.generic.base import TemplateView
+from django.shortcuts import redirect, render
+from django.views.generic.base import View
 from models import Task
 from forms import TaskForm
 
 
-class TaskIndexView(TemplateView):
+class TaskIndexView(View):
     template_name = "tasks/index.html"
 
     def get(self, request, form=None):
@@ -15,7 +15,7 @@ class TaskIndexView(TemplateView):
         tasks = Task.objects.all()
         uncompleteCount = Task.objects.filter(completed=False).count()
 
-        return self.render_to_response({
+        return render(request, 'tasks/index.html', {
             'form': form,
             'tasks': tasks,
             'uncompleteCount': uncompleteCount,
