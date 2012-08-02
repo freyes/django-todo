@@ -100,7 +100,7 @@ class TaskIndexView(TestCase):
         task = Task(description="run")
         task.save()
         response = Client().put(
-            path = '/tasks/%s' % task.id,
+            path = "/tasks/{0}".format(task.id),
             data = urlencode({
                 'description': 'swim'
             }),
