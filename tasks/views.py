@@ -4,7 +4,6 @@ from django.views.generic.base import View
 from models import Task
 from forms import TaskForm
 
-
 class TaskIndexView(View):
 
     def get(self, request, form=None):

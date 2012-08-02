@@ -1,8 +1,8 @@
 from django.test import TestCase, Client
 from models import Task
 from forms import TaskForm
+from urllib import urlencode
 from django.core.exceptions import ValidationError
-
 
 class TaskTest(TestCase):
     def test_completed_should_be_false(self):
@@ -64,7 +64,6 @@ class TaskTest(TestCase):
         self.assertTrue(Task.objects.filter(description="Test").exists())
 
 
-
 class TaskFormTest(TestCase):
     def test_should_be_invalid_from_blank_description(self):
         """
@@ -94,14 +93,18 @@ class TaskIndexView(TestCase):
         response = Client().delete('/tasks/' + str(task.id))
         self.assertFalse(Task.objects.all().exists())
     
-    # @todo babysit django-respite issue #38 to fix this
-    # def test_put_should_update_task(self):
-    #     """
-    #     A PUT request should result in the task being updated.
-    #     """
-    #     task = Task(description="run")
-    #     task.save()
-    #     response = Client().put('/tasks/' + str(task.id), {
-    #         'description': "Test"
-    #     })
-    #     self.assertTrue(Task.objects.filter(description="Test").exists())
+    def test_put_should_update_task(self):
+        """
+        A PUT request should result in the task being updated.
+        """
+        task = Task(description="run")
+        task.save()
+        response = Client().put(
+            path = '/tasks/%s' % task.id,
+            data = urlencode({
+                'description': 'swim'
+            }),
+            content_type = 'application/x-www-form-urlencoded'
+        )
+
+        self.assertTrue(Task.objects.filter(description="swim").exists())
