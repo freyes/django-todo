@@ -43,7 +43,7 @@ Then go ahead and start the local server
 python manage.py runserver
 ```
 
-And now tou should be able to access the project in the browser at http://localhost:8000.
+And now you should be able to access the project in the browser at <http://localhost:8000>.
 
 To clear the database run the following command
 
