@@ -4,3 +4,4 @@ venv
 build
 db
 .idea
+.elasticbeanstalk/
